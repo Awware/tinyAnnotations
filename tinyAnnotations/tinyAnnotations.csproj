@@ -46,8 +46,8 @@
     <Compile Include="ConfigAnalysis\Lexer\Part.cs" />
     <Compile Include="ConfigAnalysis\Lexer\tinyLexer.cs" />
     <Compile Include="ConfigAnalysis\SyntaxPart.cs" />
-    <Compile Include="ConfigCreator\IOAdditions.cs" />
-    <Compile Include="ConfigCreator\tinyConfig.cs" />
+    <Compile Include="ConfigCreator\IOConfig.cs" />
+    <Compile Include="ConfigCreator\RandStructure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConfigAnalysis\PartCollection.cs" />
   </ItemGroup>

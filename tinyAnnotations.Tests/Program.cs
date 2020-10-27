@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TinyAnnotations.ConfigAnalysis.Parser;
+using TinyAnnotations.ConfigCreator;
 using TinyAnnotations.Lexer;
 
 namespace tinyAnnotations.Tests
@@ -12,7 +13,7 @@ namespace tinyAnnotations.Tests
     public static class CLI
     {
         private const string BaseTitle = "tinyAnnotations.Tests | ";
-        private static readonly Version V = new Version(1, 6, 0, 0);
+        private static readonly Version V = new Version(1, 1, 0, 1);
         private static void Write(ConsoleColor color, string msg)
         {
             Console.ForegroundColor = color;
@@ -35,9 +36,18 @@ namespace tinyAnnotations.Tests
         static void Main(string[] args)
         {
             CLI.DisplayBaseTitle();
-            string content = File.ReadAllText("tiny.cfg");
-            tiny tiny = new tiny(content);
-            $"Value of Test -> {tiny["E"]}".ShowAsDebug();
+
+            IOConfig cfg = new IOConfig();
+            cfg
+                .BuildAttribute("A", 1.5, "Test description")
+                .BuildAttribute("B", new RandStructure(5, 25), "Random structure");
+
+            tiny t = new tiny(cfg.Generate());
+
+            //string content = File.ReadAllText("tiny.cfg");
+            //tiny tiny = new tiny(content);
+            $"Value A -> {t["A"]}".ShowAsDebug();
+            $"Value B -> {t["B"]}".ShowAsDebug();
             Console.Read();
         }
     }
