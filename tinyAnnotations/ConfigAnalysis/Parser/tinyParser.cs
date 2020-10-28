@@ -54,5 +54,13 @@ namespace tinyAnnotations.ConfigAnalysis.Parser
                 return (T)this[key];
             return default;
         }
+        public bool ValidConfig(string importantKeys)
+        {
+            string[] keys = importantKeys.Split(';');
+            foreach (string key in keys)
+                if (!ContainsKey(key))
+                    return false;
+            return true;
+        }
     }
 }
