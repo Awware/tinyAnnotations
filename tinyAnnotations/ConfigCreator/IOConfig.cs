@@ -20,6 +20,11 @@ namespace tinyAnnotations.ConfigCreator
             File.WriteAllText(configName, RawContent);
             return RawContent;
         }
+        public IOConfig InsertCommentary(string commentary)
+        {
+            RawContent += $"#{commentary}";
+            return this;
+        }
         private string FormatToTinyConfig(object value)
         {
             if (value is null)
