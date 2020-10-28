@@ -22,7 +22,7 @@ namespace tinyAnnotations.ConfigCreator
         }
         public IOConfig InsertCommentary(string commentary)
         {
-            RawContent += $"#{commentary}\n";
+            RawContent += $"{(!string.IsNullOrEmpty(RawContent) ? "\n" : string.Empty)}#{commentary}\n";
             return this;
         }
         private string FormatToTinyConfig(object value)
