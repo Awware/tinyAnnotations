@@ -47,7 +47,7 @@ namespace tinyAnnotations.Lexer
                 }
                 while (part.Kind != Part.EOF);
             }
-            var keys = from a in collection where a.Kind == Part.KEYLETTER select a;
+            var keys = from a in collection where a.Kind == Part.Key select a;
             foreach (var p in keys)
                 if (keys.Where(a => a.Value.Equals(p.Value)).Count() > 1)
                     Errors.Add($"Key `{p.Value}` already exists!");
@@ -72,11 +72,12 @@ namespace tinyAnnotations.Lexer
                     ReadString();
                     break;
                 case ':':
-                case '#':
                     ReadOperator();
                     break;
+                case '#':
+                    ReadComment();
+                    break;
                 case '$':
-                    Pos.Position++;
                     ReadKey();
                     break;
                 default:
@@ -93,22 +94,40 @@ namespace tinyAnnotations.Lexer
             string Text = Content.Substring(Pos.StartPosition, EndPositionOrLen);
             return new SyntaxPart(PartKind, Text, new PositionThat(Pos.StartPosition, EndPositionOrLen), Value);
         }
-
+        private void ReadComment()
+        {
+            Pos.Position++;
+            bool flag = false;
+            while (!flag)
+            {
+                switch (Current)
+                {
+                    case '\0':
+                    case '\r':
+                    case '\n':
+                        flag = true;
+                        break;
+                    default:
+                        Pos.Position++;
+                        break;
+                }
+            }
+            PartKind = Part.Commentary;
+        }
         private void ReadKey()
         {
-            while (char.IsLetterOrDigit(Current) && Current != ':')
+            Pos.Position++;
+            while (Current != ':')
                 Pos.Position++;
-            string key = Content.Substring(Pos.StartPosition, EndPositionOrLen);
+            string key = Content.Substring(Pos.StartPosition + 1, EndPositionOrLen - 1);
             Value = key;
-            PartKind = Part.KEYLETTER;
+            PartKind = Part.Key;
         }
 
         private void ReadOperator()
         {
             if (Current is ':')
                 PartKind = Part.COLON;
-            else if (Current is '#')
-                PartKind = Part.SHARP;
             Pos.Position++;
         }
 
@@ -144,65 +163,39 @@ namespace tinyAnnotations.Lexer
         }
         private void ReadString()
         {
+            Pos.Position++;
             bool escape = false;
-            string value = "";
-            Pos.Position++;
-            while (Current != '"' || escape == true)
+            StringBuilder value = new StringBuilder();
+            while (!escape)
             {
-                if (escape)
+                switch (Current)
                 {
-                    escape = false;
-                    switch (Current)
-                    {
-                        case 'b':
-                            value += '\b';
-                            goto end;
-                        case 'f':
-                            value += '\f';
-                            goto end;
-                        case 'n':
-                            value += '\n';
-                            goto end;
-                        case 'r':
-                            value += '\r';
-                            goto end;
-                        case 't':
-                            value += '\t';
-                            goto end;
-                        case 'u':
-                            string unicode_value = "";
-                            for (var i = 0; i < 4; i++)
-                            {
-                                Pos.Position++;
-                                unicode_value += Current;
-                            }
-                            value += (char)Convert.ToInt32(unicode_value, 16);
-                            goto end;
-                        case '"':
-                            value += '\"';
-                            goto end;
-                        case '\\':
-                            value += '\\';
-                            goto end;
-                        default:
-                            Errors.Add($"Unidentified escape sequence \\{Current} at position {Pos.Position}.");
-                            break;
-                    }
+                    case '\0':
+                    case '\r':
+                    case '\n':
+                        escape = true;
+                        Errors.Add($"Unterminated string `{Pos.StartPosition}`");
+                        break;
+                    case '"':
+                        if(Lookahead == '"')
+                        {
+                            value.Append(Current);
+                            Pos.Position += 2;
+                        }
+                        else
+                        {
+                            Pos.Position += 2;
+                            escape = true;
+                        }
+                        break;
+                    default:
+                        value.Append(Current);
+                        Pos.Position++;
+                        break;
                 }
-                if (Current == '\\')
-                {
-                    escape = true;
-                    goto end;
-                }
-
-                value += Current;
-
-                end:
-                Pos.Position++;
             }
-            Pos.Position++;
-            Value = value;
             PartKind = Part.STRING;
+            Value = value.ToString();
         }
         private void ReadOther()
         {

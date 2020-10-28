@@ -38,7 +38,7 @@ namespace tinyAnnotations.ConfigAnalysis.Parser
         }
         private void AddConfigKey()
         {
-            string key = parts[CurrentPos - 1].Value.ToString().Remove(0, 1);
+            string key = parts[CurrentPos - 1].Value.ToString();
             SyntaxPart part = parts[CurrentPos + 1];
             object value = new object();
             if (part.Kind == Part.RANDOM)

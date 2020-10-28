@@ -13,9 +13,9 @@ namespace tinyAnnotations.Lexer
         BOOL,
         NIL,
 
-        KEYLETTER,
+        Key,
         COLON,
-        SHARP,
+        Commentary,
         LETTERS,
         RANDOM,
 
