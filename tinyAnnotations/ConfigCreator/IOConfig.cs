@@ -22,7 +22,9 @@ namespace tinyAnnotations.ConfigCreator
         }
         private string FormatToTinyConfig(object value)
         {
-            if (value is string)
+            if (value is null)
+                return "";
+            else if (value is string)
                 return $"\"{value}\"";
             else if (value is bool)
                 return value.ToString().ToLower();
