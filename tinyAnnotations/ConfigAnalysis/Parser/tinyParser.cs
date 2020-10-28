@@ -52,5 +52,11 @@ namespace tinyAnnotations.ConfigAnalysis.Parser
             Add(key, value);
             CurrentPos++;
         }
+        public T CastAndGet<T>(string key)
+        {
+            if (ContainsKey(key))
+                return (T)this[key];
+            return default;
+        }
     }
 }

@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigAnalysis\Parser\tiny.cs" />
+    <Compile Include="ConfigAnalysis\Parser\tinyParser.cs" />
     <Compile Include="ConfigAnalysis\PositionThat.cs" />
     <Compile Include="ConfigAnalysis\Lexer\Part.cs" />
     <Compile Include="ConfigAnalysis\Lexer\tinyLexer.cs" />
