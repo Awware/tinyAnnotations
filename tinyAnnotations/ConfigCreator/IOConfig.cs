@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TinyAnnotations.ConfigCreator
+namespace tinyAnnotations.ConfigCreator
 {
     public class IOConfig
     {

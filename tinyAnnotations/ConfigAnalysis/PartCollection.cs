@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using TinyAnnotations.Lexer;
+using tinyAnnotations.Lexer;
 
-namespace TinyAnnotations
+namespace tinyAnnotations
 {
     public class PartCollection : List<SyntaxPart>
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TinyAnnotations.Lexer
+namespace tinyAnnotations.Lexer
 {
     public enum Part
     {

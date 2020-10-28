@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TinyAnnotations.ConfigAnalysis.Parser;
-using TinyAnnotations.ConfigCreator;
-using TinyAnnotations.Lexer;
+using tinyAnnotations.ConfigAnalysis.Parser;
+using tinyAnnotations.ConfigCreator;
+using tinyAnnotations.Lexer;
 
 namespace tinyAnnotations.Tests
 {

@@ -1,6 +1,6 @@
-﻿using TinyAnnotations.Lexer;
+﻿using tinyAnnotations.Lexer;
 
-namespace TinyAnnotations
+namespace tinyAnnotations
 {
     public class SyntaxPart
     {

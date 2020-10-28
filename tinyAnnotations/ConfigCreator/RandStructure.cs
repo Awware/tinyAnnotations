@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TinyAnnotations.ConfigCreator
+namespace tinyAnnotations.ConfigCreator
 {
     public class RandStructure
     {
