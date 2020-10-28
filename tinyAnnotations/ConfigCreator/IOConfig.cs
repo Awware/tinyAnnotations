@@ -23,7 +23,7 @@ namespace tinyAnnotations.ConfigCreator
         private string FormatToTinyConfig(object value)
         {
             if (value is null)
-                return "\"\0\"";
+                return "\"\"";
             else if (value is string)
                 return $"\"{value}\"";
             else if (value is bool)
