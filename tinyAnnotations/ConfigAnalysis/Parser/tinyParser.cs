@@ -12,19 +12,15 @@ namespace tinyAnnotations.ConfigAnalysis.Parser
         private int CurrentPos = 0;
         private PartCollection parts;
         private static Random r = new Random();
-        public tiny(string config) : this(new tinyLexer().GetParts(config, out HashSet<string> Errors))
+        public tiny(string config)
         {
-            if (Errors.Count > 0) {
+            tinyLexer lex = new tinyLexer();
+            parts = lex.GetParts(config, out HashSet<string> Errors);
+            if (Errors.Any()) {
                 foreach (var error in Errors)
-                {
                     Console.WriteLine($"[ERROR] {error}");
-                }
                 return;
             }
-        }
-        public tiny(PartCollection collection)
-        {
-            parts = collection;
             Parse();
         }
         private void Parse()

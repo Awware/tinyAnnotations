@@ -170,6 +170,15 @@ namespace tinyAnnotations.Lexer
             {
                 switch (Current)
                 {
+                    case '\\':
+                        switch (Lookahead)
+                        {
+                            case '"':
+                                value.Append(Lookahead);
+                                Pos.Position += 2;
+                                break;
+                        }
+                        break;
                     case '\0':
                     case '\r':
                     case '\n':
@@ -177,16 +186,8 @@ namespace tinyAnnotations.Lexer
                         Errors.Add($"Unterminated string `{Pos.StartPosition}`");
                         break;
                     case '"':
-                        if(Lookahead == '"')
-                        {
-                            value.Append(Current);
-                            Pos.Position += 2;
-                        }
-                        else
-                        {
-                            Pos.Position += 2;
-                            escape = true;
-                        }
+                        Pos.Position += 2;
+                        escape = true;
                         break;
                     default:
                         value.Append(Current);

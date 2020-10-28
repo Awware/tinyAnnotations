@@ -40,7 +40,8 @@ namespace tinyAnnotations.Tests
             IOConfig cfg = new IOConfig();
             cfg
                 .BuildAttribute("A", 1.5, "Test description")
-                .BuildAttribute("B", new RandStructure(5, 25), "Random structure");
+                .BuildAttribute("B", new RandStructure(5, 25), "Random structure")
+                .BuildAttribute("C", "ABC\\\"", "String");
 
             tiny t = new tiny(cfg.Generate());
 
@@ -48,6 +49,7 @@ namespace tinyAnnotations.Tests
             //tiny tiny = new tiny(content);
             $"Value A -> {t["A"]}".ShowAsDebug();
             $"Value B -> {t["B"]}".ShowAsDebug();
+            $"Value C -> {t["C"]}".ShowAsDebug();
             Console.Read();
         }
     }
