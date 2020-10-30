@@ -186,7 +186,7 @@ namespace tinyAnnotations.Lexer
                         Errors.Add($"Unterminated string `{Pos.StartPosition}`");
                         break;
                     case '"':
-                        Pos.Position += 2;
+                        Pos.Position++;
                         escape = true;
                         break;
                     default:
